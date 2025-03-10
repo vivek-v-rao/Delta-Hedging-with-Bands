@@ -1,4 +1,4 @@
-# Delta-Hedging-with-Bands
+# Delta Hedging with Bands
 Delta hedging of stock options with bands. In the sample results below you can see that a delta hedging threshold of 0.02 works better than no threshold, especially for frequent rebalancing.
 
 ```
