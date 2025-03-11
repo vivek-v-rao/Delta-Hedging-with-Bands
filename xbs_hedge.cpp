@@ -22,17 +22,18 @@ int main() {
 	const double S0 = 100.0;
 	const double K = 100.0;
 	const double T = 1.0;
-	const double r = 0.0;
-	const double implied_sigma = 0.25;
-	const double realized_sigma = 0.20;
+	const double r = 0.05;
+	const double implied_sigma = 0.20;
+	const double realized_sigma = 0.15;
 	const double transaction_cost = 0.001;
-	const int num_paths = 1000;
-	const vector<int> hedging_frequencies = {0, 1, 4, 12, 52, 252, 504, 756, 1008, 2520, 5040, 10080, 20160};
+	const int num_paths = 10000;
+	const vector<int> hedging_frequencies = {1, 4, 12, 52, 252, 2520, 5040};
 	const double position = -1.0;
 	const OptionType option_type = OptionType::Straddle; // Change this to Call, Put, or Straddle
+	const unsigned int seed = 42;
 	
 	// Delta threshold values to test
-	const vector<double> delta_thresholds = {0.0, 0.01, 0.02, 0.05, 0.1};
+	const vector<double> delta_thresholds = {0.0, 0.01, 0.02, 0.05};
 
 	const double bs_price_implied = bs_price(S0, K, T, r, implied_sigma, option_type);
 	const double bs_price_realized = bs_price(S0, K, T, r, realized_sigma, option_type);
@@ -51,7 +52,8 @@ int main() {
 	cout << "Implied Volatility (sigma):  " << setw(10) << implied_sigma << "\n";
 	cout << "Realized Volatility:         " << setw(10) << realized_sigma << "\n";
 	cout << "Transaction Cost:            " << setw(10) << transaction_cost << "\n";
-	cout << "Number of Simulations:       " << setw(10) << num_paths << "\n\n";
+	cout << "Number of Simulations:       " << setw(10) << num_paths << "\n";
+	cout << "RNG seed:                    " << setw(10) << seed << "\n";
 
 	for (const double delta_thresh : delta_thresholds) {
 		cout << "\nDelta Hedging Threshold: " << delta_thresh << "\n";
@@ -66,7 +68,7 @@ int main() {
 		for (const int freq : hedging_frequencies) {
 			const SimulationResult result = simulate_hedging(S0, K, T, r, implied_sigma, 
 				realized_sigma, transaction_cost, freq, num_paths, bs_price_implied, position, 
-				option_type, delta_thresh);
+				option_type, delta_thresh, seed);
 
 			cout << setw(11) << freq << setw(15) << result.mean_profit 
 					<< setw(12) << result.std_dev_profit << setw(12) << result.mean_to_std_ratio << "\n";
