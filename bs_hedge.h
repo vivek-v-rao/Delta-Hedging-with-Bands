@@ -35,6 +35,7 @@ SimulationResult simulate_hedging(const double S0, const double K, const double 
 				  const double realized_sigma, const double transaction_cost, 
 				  const int num_steps, const int num_paths,
 				  const double premium, const double position, 
-				  OptionType type, const double delta_thresh = 0.0);
+				  OptionType type, const double delta_thresh = 0.0,
+				  unsigned int seed = 0);
 
 #endif // BS_HEDGE_H
