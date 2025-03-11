@@ -43,9 +43,9 @@ SimulationResult simulate_hedging(const double S0, const double K, const double 
 				  const double realized_sigma, const double transaction_cost, 
 				  const int num_steps, const int num_paths,
 				  const double premium, const double position, 
-				  OptionType type, const double delta_thresh) {
-	random_device rd;
-	mt19937 gen(rd());
+				  OptionType type, const double delta_thresh,
+				  unsigned int seed) {
+	mt19937 gen(seed);
 	normal_distribution<> dist(0, 1);
 
 	const double dt = (num_steps == 0) ? T : T / num_steps;
